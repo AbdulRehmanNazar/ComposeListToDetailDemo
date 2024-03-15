@@ -1,6 +1,7 @@
 package com.devtechlogix.notesapplication
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,20 +16,34 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import com.devtechlogix.notesapplication.api.APIService
 import com.devtechlogix.notesapplication.data.DataManager
 import com.devtechlogix.notesapplication.ui.theme.NotesApplicationTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject
+    lateinit var apiService: APIService
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //Local Data Loading
+//        CoroutineScope(Dispatchers.IO).launch {
+//            delay(3000)
+//            DataManager.loadsData(applicationContext)
+//        }
+
+        //Remote Data Loading
         CoroutineScope(Dispatchers.IO).launch {
-            delay(3000)
-            DataManager.loadsData(applicationContext)
+            val response = apiService.getContributors()
+            Log.d("", response.toString())
+            DataManager.isDataLoaded.value = true
         }
         setContent {
             App()
