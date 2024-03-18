@@ -4,4 +4,5 @@ A detailed example of Compose using LazyColumn and load data from the Assets and
 Here is Youtube explanation visual link
 https://youtube.com/shorts/BmjcPg28Gx4
 
-![ComposeListandDetailPagewithLazyColumn-ezgif com-optimize (1)](https://github.com/AbdulRehmanNazar/ComposeListToDetailExample/assets/6792823/c1491afb-1934-4d3a-8512-3fbf1998a291)
+![Screenshot_1710351787](https://github.com/AbdulRehmanNazar/ComposeListToDetailExample/assets/6792823/a0e742b6-dc95-497f-bc48-3dfd6a73dde9)
+
