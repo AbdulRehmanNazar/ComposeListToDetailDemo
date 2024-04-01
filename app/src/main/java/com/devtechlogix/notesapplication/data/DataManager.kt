@@ -18,16 +18,16 @@ object DataManager {
     var isDataLoaded = mutableStateOf(false)
     var currentPage = mutableStateOf(PAGES.LIST)
     var currentContributer: Contributers? = null
-    var dataList = emptyList<Contributers>()
+     var dataList = emptyList<Contributers>()
 
-    fun loadsData(context: Context): List<Contributers> {
-
-        val fileInString: String =
-            context.assets.open("data.json").bufferedReader().use { it.readText() }
-        dataList = Gson().fromJson(fileInString, Array<Contributers>::class.java).asList()
-        isDataLoaded.value = true
-        return dataList
-    }
+//    fun loadsData(context: Context): List<Contributers> {
+//
+//        val fileInString: String =
+//            context.assets.open("data.json").bufferedReader().use { it.readText() }
+//        dataList = Gson().fromJson(fileInString, Array<Contributers>::class.java).asList()
+//        isDataLoaded.value = true
+//        return dataList
+//    }
 
     fun switchPages() {
         if (currentPage.value == PAGES.LIST) {

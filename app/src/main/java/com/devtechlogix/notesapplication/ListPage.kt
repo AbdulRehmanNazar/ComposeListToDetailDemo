@@ -18,6 +18,8 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,11 +32,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.devtechlogix.notesapplication.data.DataManager
 import com.devtechlogix.notesapplication.models.Contributers
+import com.devtechlogix.notesapplication.viewmodels.ContributersViewModel
 
 
 /**
@@ -55,6 +59,10 @@ fun ShowContributersList(onClick: (data: Contributers) -> Unit) {
 //        }
 //    }
 
+    val contributersViewModel: ContributersViewModel = viewModel()
+    val contributers: State<List<Contributers>> =
+        contributersViewModel.contributers.collectAsState()
+
     Column {
         Text(
             modifier = Modifier
@@ -66,9 +74,12 @@ fun ShowContributersList(onClick: (data: Contributers) -> Unit) {
             fontWeight = FontWeight.Bold
         )
         LazyColumn(modifier = Modifier.padding(8.dp)) {
-            items(DataManager.loadsData(context)) { contributer ->
+            items(contributers.value) { contributer ->
                 ContributerItem(contributer, onClick)
             }
+//            items(DataManager.loadsData(context)) { contributer ->
+//                ContributerItem(contributer, onClick)
+//            }
         }
     }
 }
