@@ -1,6 +1,5 @@
 package com.devtechlogix.notesapplication
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -25,18 +24,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.compose.AsyncImage
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-import com.devtechlogix.notesapplication.data.DataManager
 import com.devtechlogix.notesapplication.models.Contributers
 import com.devtechlogix.notesapplication.viewmodels.ContributersViewModel
 
@@ -49,17 +41,7 @@ import com.devtechlogix.notesapplication.viewmodels.ContributersViewModel
 
 @Composable
 fun ShowContributersList(onClick: (data: Contributers) -> Unit) {
-    val context = LocalContext.current
-
-//    LazyVerticalGrid(
-//        columns = GridCells.Adaptive(minSize = 128.dp)
-//    ) {
-//        items(DataManager.loadsData(context)) { photo ->
-//            ContributerGridItem(photo)
-//        }
-//    }
-
-    val contributersViewModel: ContributersViewModel = viewModel()
+    val contributersViewModel: ContributersViewModel = hiltViewModel()
     val contributers: State<List<Contributers>> =
         contributersViewModel.contributers.collectAsState()
 
@@ -77,58 +59,12 @@ fun ShowContributersList(onClick: (data: Contributers) -> Unit) {
             items(contributers.value) { contributer ->
                 ContributerItem(contributer, onClick)
             }
-//            items(DataManager.loadsData(context)) { contributer ->
-//                ContributerItem(contributer, onClick)
-//            }
         }
     }
 }
-
-@Composable
-fun ContributerGridItem(contributer: Contributers) {
-    val context = LocalContext.current
-    Card(
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 10.dp
-        ),
-        modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth(1f)
-            .clickable {
-                Toast
-                    .makeText(context, contributer.login, Toast.LENGTH_SHORT)
-                    .show()
-            }
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(contributer.imageURL)
-                    .crossfade(true)
-                    .build(),
-                contentDescription = "",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(44.dp)
-                    .clip(CircleShape)
-            )
-//            Image(
-//                painter = rememberAsyncImagePainter(contributers.imageURL),
-//                contentDescription = "",
-//                modifier = Modifier
-//                    .size(50.dp)
-//                    .clip(CircleShape)
-//                    .border(2.dp, Color.Gray, CircleShape),
-//                contentScale = ContentScale.Fit,
-//            )
-        }
-    }
-}
-
 
 @Composable
 fun ContributerItem(contributers: Contributers, onClick: (data: Contributers) -> Unit) {
-    val context = LocalContext.current
     Card(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 10.dp

@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.devtechlogix.notesapplication.data.DataManager
+import androidx.navigation.NavController
 import com.devtechlogix.notesapplication.models.Contributers
 
 
@@ -23,10 +23,13 @@ import com.devtechlogix.notesapplication.models.Contributers
  */
 
 @Composable
-fun ShowDetailPage(contributers: Contributers, onClick: (data: Contributers) -> Unit) {
+fun ShowDetailPage(
+    contributers: Contributers,
+    navController: NavController,
+    onClick: (data: Contributers) -> Unit
+) {
     BackHandler {
-        DataManager.currentContributer = null
-        DataManager.switchPages()
+        navController.navigate(PAGES.LIST.name)
     }
     Column {
         Text(
@@ -45,8 +48,4 @@ fun ShowDetailPage(contributers: Contributers, onClick: (data: Contributers) -> 
 
     }
 
-}
-
-fun testLambdas() {
-    val lambdasTest = { x: Int -> println() }
 }
