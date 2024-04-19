@@ -3,9 +3,11 @@ package com.devtechlogix.notesapplication
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -24,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -45,19 +48,29 @@ fun ShowContributersList(onClick: (data: Contributers) -> Unit) {
     val contributers: State<List<Contributers>> =
         contributersViewModel.contributers.collectAsState()
 
-    Column {
-        Text(
-            modifier = Modifier
-                .padding(8.dp)
-                .fillMaxWidth(1f),
-            text = "Contributers List",
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.Bold
+
+    if (contributers.value.isEmpty()) {
+        Box(
+            modifier = Modifier.fillMaxSize(1f),
+            contentAlignment = Alignment.Center, content = {
+                Text(text = "Loading...", style = MaterialTheme.typography.titleLarge)
+            }
         )
-        LazyColumn(modifier = Modifier.padding(8.dp)) {
-            items(contributers.value) { contributer ->
-                ContributerItem(contributer, onClick)
+    } else {
+        Column {
+//        Text(
+//            modifier = Modifier
+//                .padding(8.dp)
+//                .fillMaxWidth(1f),
+//            text = "Contributers List",
+//            textAlign = TextAlign.Center,
+//            style = MaterialTheme.typography.titleLarge,
+//            fontWeight = FontWeight.Bold
+//        )
+            LazyColumn(modifier = Modifier.padding(8.dp)) {
+                items(contributers.value) { contributer ->
+                    ContributerItem(contributer, onClick)
+                }
             }
         }
     }
